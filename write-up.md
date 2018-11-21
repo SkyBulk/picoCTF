@@ -173,6 +173,13 @@ Say my name, say my name.
 
 # Client Side is Still Bad
 
+challenge description
+
+I forgot my password again, but this time there doesn't seem to be a reset, can you help me? http://2018shell1.picoctf.com:8930
+
+look the source, luke !!
+
+
 ```
 <script type="text/javascript">
   function verify() {
@@ -203,6 +210,8 @@ Say my name, say my name.
 </script>
 
 ```
+We can see our flag right there our flag ``` picoCTF{client_is_bad_debbd} ```
+
 
 ***
 
