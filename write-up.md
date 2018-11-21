@@ -216,7 +216,7 @@ We can see our flag right there our flag ``` picoCTF{client_is_bad_debbd} ```
 
 we first checked what kind of binary.
 
-![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/tree/master/images/binary_bof_0_0.png)
+![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/blob/master/images/binary_bof_0_0.png)
 
 once after we see it is an ELF 32 bits, then we ran GDB to see their functions, and binary security.
 
