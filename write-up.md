@@ -216,15 +216,15 @@ We can see our flag right there our flag ``` picoCTF{client_is_bad_debbd} ```
 
 we first checked what kind of binary.
 
-![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/images/binary_bof_0_0.png)
+![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/tree/master/images/binary_bof_0_0.png)
 
 once after we see it is an ELF 32 bits, then we ran GDB to see their functions, and binary security.
 
-![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/images/binary_bof_0_1.png)
+![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/tree/master/images/binary_bof_0_1.png)
 
 the binary display a ``` main , and vuln function ``` with their address , and we make our fuzzer to fuzz our binary as below
 
-![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/images/binary_bof_0_3.png)
+![binary_bof_0](https://github.com/SkyBulk/picoCTF2018/tree/master/images/binary_bof_0_3.png)
 
 it show us , we see we got an overflow and their offset at 24 then we prepare our payload to read the flag.txt
 
